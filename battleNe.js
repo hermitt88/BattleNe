@@ -15,16 +15,20 @@ function drawNe(neko) {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    neneneko.forEach(neko => {
+    for (const neko of Object.values(neneneko)) {
         drawNe(neko);
         neko.x += neko.dx;
-    })
+        if (neko.x < 100) {
+            delete neneneko[neko.id];
+        }
+    }
 }
 
-setInterval(draw, 10);
+setInterval(draw, 1000/30);
 
 class Ne {
     constructor(width, height, speed, color) {
+        this.id = 0;
         this.width = width;
         this.height = height;
         this.x = 900 - width;
@@ -35,6 +39,5 @@ class Ne {
     }
 }
 
-var neneneko = [];
-var neko1 = new Ne(40, 40, 1, 'brown');
-neneneko.push(neko1);
+var neneneko = {};
+neneneko[0] = new Ne(40, 40, 5, 'brown');
